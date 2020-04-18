@@ -66,7 +66,7 @@ app.post('/authenticateCustomer', (req, res) => {
         } else {
             console.log("records being fetched");
             if (result.length > 0) {
-                var responsePayload = { message: "Authentication Successfull", customerId: result[0].Cid, customerName: result[0].FirstName + " " + result[0].LastName, status: true };
+                var responsePayload = { message: "Authentication Successfull", customerId: result[0].Cid, customerName: result[0].FirstName + result[0].LastName, status: true };
 
                 res.status(200);
                 res.send(responsePayload)

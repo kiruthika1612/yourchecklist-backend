@@ -70,7 +70,7 @@ app.post('/authenticateCustomer', (req, res) => {
                 res.send(responsePayload)
             } else {
                 var responsePayload = { message: "Authentication Failed. Email Id/Password is Incorrect", status: false };
-                res.status(400);
+                res.status(200);
                 res.send(responsePayload)
             }
         }

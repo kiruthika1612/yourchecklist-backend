@@ -6,12 +6,14 @@ var bodyParser = require('body-parser')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "Sansusa27",
+    password: "RamMala@2708",
     database: "ycdb"
 });
 
 var app = express()
+//since we  are using two ports
 app.use(cors())
+//using json format
 app.use(bodyParser.json())
 
 con.connect(function (err) {
@@ -19,7 +21,7 @@ con.connect(function (err) {
     console.log("Connected!");
 });
 
-
+//sample test
 app.get('/sample', (req, res) => {
 
     res.send('Sending back response! Hi susa...');
@@ -70,7 +72,7 @@ app.post('/authenticateCustomer', (req, res) => {
                 res.send(responsePayload)
             } else {
                 var responsePayload = { message: "Authentication Failed. Email Id/Password is Incorrect", status: false };
-                res.status(400);
+                res.status(200);
                 res.send(responsePayload)
             }
         }

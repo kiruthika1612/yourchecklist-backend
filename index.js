@@ -106,7 +106,7 @@ app.post('/getmyproducts', (req, res) => {
     var cid = customer_product.cid;
     console.log(customer_product);
 
-    var sql = "select p.pid,p.productName from products p join customer_products cp on p.pid = cp.pid where cp.cid = ?";
+    var sql = "select p.pid,p.productName,p.productImageUrl from products p join customer_products cp on p.pid = cp.pid where cp.cid = ?";
     con.query(sql, [cid], function (err, result) {
         if (err) {
             var response = { message: 'Failed Retrieve products Please retry..', statusCode: 400 }

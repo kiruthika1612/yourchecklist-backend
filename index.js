@@ -6,7 +6,7 @@ var bodyParser = require('body-parser')
 var con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "RamMala@2708",
+    password: "Sansusa27",
     database: "ycdb"
 });
 
@@ -18,7 +18,7 @@ app.use(bodyParser.json())
 
 con.connect(function (err) {
     if (err) console.log(err);
-    console.log("Connected!");
+    else console.log("Connected!");
 });
 
 //sample test
@@ -78,6 +78,46 @@ app.post('/authenticateCustomer', (req, res) => {
         }
     });
 
+});
+
+
+// customer purchase products
+app.post('/buy', (req, res) => {
+
+    var customer_product = req.body;
+    console.log(customer_product);
+    var sql = "insert into customer_products(cid,pid) values (" + customer_product.cid + ",'" + customer_product.pid + "')";
+    con.query(sql, function (err, result) {
+        if (err) {
+            var response = { message: 'Failed to purchase product! Please retry..', statusCode: 400 }
+        } else {
+            res.status(200)
+            var response = { message: 'Product purchased successfully', statusCode: 200 }
+        }
+        res.send(response)
+
+    });
+});
+
+// customer retrive products
+app.post('/getmyproducts', (req, res) => {
+
+    var customer_product = req.body;
+    var cid = customer_product.cid;
+    console.log(customer_product);
+
+    var sql = "select p.pid,p.productName from products p join customer_products cp on p.pid = cp.pid where cp.cid = ?";
+    con.query(sql, [cid], function (err, result) {
+        if (err) {
+            var response = { message: 'Failed Retrieve products Please retry..', statusCode: 400 }
+            res.send(response)
+        } else {
+            res.status(200)
+            var response = { products: result, totalItems: result.length }
+            res.send(response)
+        }
+
+    });
 });
 
 app.listen(3000)

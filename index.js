@@ -120,4 +120,20 @@ app.post('/getmyproducts', (req, res) => {
     });
 });
 
+app.get('/getUserDetails/:cid', (req, res) => {
+    var cid = req.params.cid;
+
+    var sql = "select LastName, FirstName, Email, DOB,  Streetno, Streetname, Complement ,City,Province,Country ,Postalcode from customers where Cid = ?";
+    con.query(sql, [cid], function (err, result) {
+        if (err) {
+            var response = { message: 'Failed Retrieve customer details.. Please retry..', statusCode: 400 }
+            res.send(response)
+        } else {
+            res.status(200)
+            res.send(result[0])
+        }
+
+    });
+});
+
 app.listen(3000)
